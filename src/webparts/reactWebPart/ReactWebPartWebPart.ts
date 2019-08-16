@@ -10,6 +10,7 @@ import {
 import * as strings from 'ReactWebPartWebPartStrings';
 import ReactWebPart from './components/ReactWebPart';
 import { IReactWebPartProps } from './components/IReactWebPartProps';
+import { SPHttpClient } from '@microsoft/sp-http';
 
 export interface IColour {
   id: number;
@@ -26,12 +27,15 @@ export default class ReactWebPartWebPart extends BaseClientSideWebPart<IReactWeb
     const element: React.ReactElement<IReactWebPartProps > = React.createElement(
       ReactWebPart,
       {
-        description: this.properties.description
+        description: this.properties.description,
+        spHttpClient: this.context.spHttpClient,
+        currentSiteUrl: this.context.pageContext.web.absoluteUrl
       }
     );
 
     ReactDom.render(element, this.domElement);
   }
+  
 
   protected onDispose(): void {
     ReactDom.unmountComponentAtNode(this.domElement);

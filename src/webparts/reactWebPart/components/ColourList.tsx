@@ -3,8 +3,11 @@ import {IColour} from '../IColour';
 import {List } from 'office-ui-fabric-react/lib/List';
 import { DefaultButton } from 'office-ui-fabric-react/lib/Button';
 
+export type RemoveColourCallback = (colour: IColour) => void;
+
 export interface IColourListProps {
     colours: IColour[];
+    onRemoveColour: RemoveColourCallback;
 }
 
 export class ColourList extends React.Component <IColourListProps, {}> {
@@ -25,6 +28,6 @@ private _onRenderListCell = (colour: IColour, index: number | undefined ): JSX.E
     );
     }
     private _onButtonClick(colour: IColour): void {
-        console.log('clicked delete for colour: ', colour);
+        this.props.onRemoveColour(colour);
     }
 }
